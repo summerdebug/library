@@ -1,11 +1,14 @@
 package com.example.library.controller;
 
-import com.example.library.service.AuthorService;
+import com.example.library.dto.AuthorDto;
 import com.example.library.exception.AuthorNotFoundException;
 import com.example.library.model.Author;
+import com.example.library.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,9 +24,14 @@ public class AuthorController {
     return authorService.getAll();
   }
 
-  @GetMapping(path = "/{id}")
+  @GetMapping("/{id}")
   public Author get(@PathVariable(name = "id") Long id) throws AuthorNotFoundException {
     return authorService.get(id);
+  }
+
+  @PostMapping("/")
+  public Author save(@RequestBody AuthorDto authorDto) {
+    return authorService.save(authorDto);
   }
 
 }
