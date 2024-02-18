@@ -53,4 +53,25 @@ class AuthorControllerTest {
         .andExpect(jsonPath("$[0].firstName", is("Mark")));
   }
 
+  @Test
+  public void whenGetByIdThenAuthorReturned() throws Exception {
+    String firstName = "George";
+    String lastName = "Orwell";
+    Author author = authorRepository.save(new Author(firstName, lastName));
+
+    mockMvc.perform(get("/authors/" + author.getId()))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.firstName", is(firstName)))
+        .andExpect(jsonPath("$.lastName", is(firstName)));
+  }
+
+  @Test
+  public void givenIdNotExistWhenGetAuthorThenNotFound() throws Exception {
+    mockMvc.perform(get("/authors/" + Long.MAX_VALUE))
+        .andExpect(status().isNotFound())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.errorMsg", is("Author not found.")));
+  }
+
 }
