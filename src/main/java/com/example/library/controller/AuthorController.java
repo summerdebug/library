@@ -1,6 +1,6 @@
 package com.example.library.controller;
 
-import com.example.library.AuthorService;
+import com.example.library.service.AuthorService;
 import com.example.library.exception.AuthorNotFoundException;
 import com.example.library.model.Author;
 import lombok.RequiredArgsConstructor;

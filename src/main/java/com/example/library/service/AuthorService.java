@@ -1,4 +1,4 @@
-package com.example.library;
+package com.example.library.service;
 
 import com.example.library.exception.AuthorNotFoundException;
 import com.example.library.model.Author;
