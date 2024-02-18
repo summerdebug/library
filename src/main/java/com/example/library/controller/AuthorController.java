@@ -1,8 +1,8 @@
 package com.example.library.controller;
 
+import com.example.library.AuthorService;
 import com.example.library.exception.AuthorNotFoundException;
 import com.example.library.model.Author;
-import com.example.library.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthorController {
 
-  private final AuthorRepository authorRepository;
+  private final AuthorService authorService;
 
   @GetMapping
   public Iterable<Author> getAll() {
-    return authorRepository.findAll();
+    return authorService.getAll();
   }
 
   @GetMapping(path = "/{id}")
   public Author get(@PathVariable(name = "id") Long id) throws AuthorNotFoundException {
-    return authorRepository.findById(id).orElseThrow(AuthorNotFoundException::new);
+    return authorService.get(id);
   }
 
 }
