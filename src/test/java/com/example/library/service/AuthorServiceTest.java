@@ -23,8 +23,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -43,24 +42,24 @@ class AuthorServiceTest {
 
   @Test
   public void whenGetAllThenSuccessful() {
-    Iterable<Author> expectedAuthors = new ArrayList<>();
-    when(authorRepository.findAll()).thenReturn(expectedAuthors);
+    Iterable<Author> authorsExpected = new ArrayList<>();
+    when(authorRepository.findAll()).thenReturn(authorsExpected);
 
-    Iterable<Author> actualAuthors = authorService.getAll();
+    Iterable<Author> authorsActual = authorService.getAll();
 
-    assertSame(expectedAuthors, actualAuthors);
+    assertSame(authorsExpected, authorsActual);
     verify(authorRepository).findAll();
   }
 
   @Test
   public void whenGetAuthorThenSuccessful() throws Exception {
     Long authorId = 1L;
-    Author expectedAuthor = new Author("George", "Orwell");
-    when(authorRepository.findById(authorId)).thenReturn(Optional.of(expectedAuthor));
+    Author authorExpected = new Author("George", "Orwell");
+    when(authorRepository.findById(authorId)).thenReturn(Optional.of(authorExpected));
 
-    Author actualAuthor = authorService.get(authorId);
+    Author authorActual = authorService.get(authorId);
 
-    assertSame(expectedAuthor, actualAuthor);
+    assertSame(authorExpected, authorActual);
     verify(authorRepository).findById(authorId);
   }
 

@@ -35,18 +35,15 @@ class AuthorControllerTest {
   @Autowired
   private AuthorRepository authorRepository;
 
-  @BeforeEach
-  public void initDatabase() {
+  @Test
+  public void whenGetAllThenAuthorsReturned() throws Exception {
     authorRepository.deleteAll();
     List<Author> authors = List.of(
         new Author("Mark", "Twain"),
         new Author("Jack", "London")
     );
     authorRepository.saveAll(authors);
-  }
 
-  @Test
-  public void whenGetAllThenAuthorsReturned() throws Exception {
     mockMvc.perform(get("/authors")).andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$", Matchers.hasSize(2)))
@@ -63,7 +60,7 @@ class AuthorControllerTest {
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.firstName", is(firstName)))
-        .andExpect(jsonPath("$.lastName", is(firstName)));
+        .andExpect(jsonPath("$.lastName", is(lastName)));
   }
 
   @Test
