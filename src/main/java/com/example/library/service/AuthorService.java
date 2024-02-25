@@ -6,7 +6,6 @@ import com.example.library.model.Author;
 import com.example.library.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +21,16 @@ public class AuthorService {
     return authorRepository.findById(id).orElseThrow(AuthorNotFoundException::new);
   }
 
-  public Author save(@RequestBody AuthorDto authorDto) {
+  public Author create(AuthorDto authorDto) {
     Author author = new Author(authorDto.firstName(), authorDto.lastName());
+    return authorRepository.save(author);
+  }
+
+  public Author update(Long id, AuthorDto authorDto)
+      throws AuthorNotFoundException {
+    Author author = authorRepository.findById(id).orElseThrow(AuthorNotFoundException::new);
+    author.setFirstName(authorDto.firstName());
+    author.setLastName(authorDto.lastName());
     return authorRepository.save(author);
   }
 }

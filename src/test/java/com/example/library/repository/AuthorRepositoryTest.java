@@ -48,7 +48,7 @@ class AuthorRepositoryTest {
   private AuthorRepository authorRepository;
 
   @Test
-  public void whenGetAllThenAuthorsReturned() {
+  public void whenFindAllThenAuthorsReturned() {
     authorRepository.deleteAll();
     testEntityManager.persist(new Author("Mark", "Twain"));
     testEntityManager.persist(new Author("Jack", "London"));
@@ -62,7 +62,7 @@ class AuthorRepositoryTest {
   }
 
   @Test
-  public void whenGetThenAuthorReturned() {
+  public void whenFindByIdThenAuthorReturned() {
     Author authorExpected = testEntityManager.persist(new Author("Mark", "Twain"));
 
     Optional<Author> authorActual = authorRepository.findById(authorExpected.getId());
@@ -72,8 +72,17 @@ class AuthorRepositoryTest {
   }
 
   @Test
-  public void givenIdNotExistWhenGetThenEmpty() {
+  public void givenIdNotExistWhenFindByIdThenEmpty() {
     Optional<Author> authorActual = authorRepository.findById(Long.MAX_VALUE);
     assertFalse(authorActual.isPresent());
+  }
+
+  @Test
+  public void whenSaveThenAuthorSaved() {
+    Author author = new Author("Mark", "Twain");
+
+    Author authorSaved = authorRepository.save(author);
+
+    assertNotNull(authorSaved.getId());
   }
 }
